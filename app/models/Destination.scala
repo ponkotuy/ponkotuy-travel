@@ -67,6 +67,6 @@ object Destination extends SkinnyCRUDMapperWithId[DestId, Destination] {
 
   override def extract(rs: WrappedResultSet, n: ResultName[Destination]): Destination = autoConstruct(rs, n)
 
-  def create(name: String, close: Boolean = false)(implicit db: DBSession) =
-    createWithAttributes('name -> name, 'close -> close, 'money -> None, 'created -> System.currentTimeMillis())
+  def create(name: String)(implicit db: DBSession) =
+    createWithAttributes('name -> name, 'money -> None, 'created -> System.currentTimeMillis())
 }
