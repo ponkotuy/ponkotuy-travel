@@ -18,7 +18,7 @@ class API extends Controller {
         val v = Vote.defaultAlias
         val ip = ipToLong(req.domain).getOrElse(req.domain.hashCode.toLong)
         val dayAgo = System.currentTimeMillis() - 1.day.toMillis
-        val sessionCount = Vote.where(sqls.eq(v.sessionId, session.id).and.gt(v.created, dayAgo)).count()
+        val sessionCount = Vote.where(sqls.eq(v.sessionId, session.id.value).and.gt(v.created, dayAgo)).count()
         if(sessionCount > 0) Redirect(routes.View.index("Already voted today."))
         else {
           Vote.create(DestId(destId), session.id, ip)
