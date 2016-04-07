@@ -11,74 +11,82 @@
     <title>ぽんこつ とらべる</title>
   </head>
   <body>
-    @if(message.nonEmpty) {
-      <div class="alert alert-warning alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        @message
-      </div>
-    }
-    <div class="row">
-      <div class="col-sm-4">
-        <h3>行き先候補</h3>
-        <table class="table table-condensed table-striped">
-          <tr><th>行き先</th><th>投票数</th><th>金額</th><th></th></tr>
-          @open.map { d =>
-            <tr>
-              <th>@d.name</th>
-              <td>@d.vote</td>
-              <td>@d.money.getOrElse("-")</td>
-              <td>
-                <form>
-                  <button type="submit" class="btn btn-info btn-xs" formaction="/vote/@d.id" formmethod="post">投票</button>
-                </form>
-              </td>
-            </tr>
-          }
-        </table>
-
-        <form class="form-inline">
-          <div class="form-group">
-            <input type="text" class="form-control" id="dest" name="name" title="name">
-          </div>
-          <button type="submit" class="btn btn-default" formaction="/distination" formmethod="post">行き先追加</button>
-        </form>
+    <div class="container" role="main">
+      <div class="jumbotron">
+        <h1>ぽんこつ<span class="glyphicon glyphicon-plane" aria-hidden="true"></span>とらべる</h1>
+        <p>Travel Kanpa System</p>
       </div>
 
-      <div class="col-sm-4">
-        <h3>行くことが決まった所</h3>
-        <table class="table table-condensed table-striped">
-          <tr><th>行き先</th><th>投票数</th><th>コメント</th></tr>
-          @scheduling.map { d =>
-            <tr>
-              <th>@d.name</th>
-              <td>@d.vote</td>
-              <td>@d.message</td>
-            </tr>
-          }
-        </table>
+      @if(message.nonEmpty) {
+        <div class="alert alert-warning alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          @message
+        </div>
+      }
+
+      <div class="row">
+        <div class="col-sm-4">
+          <h2>行き先候補</h2>
+          <table class="table table-condensed table-striped">
+            <tr><th>行き先</th><th>投票数</th><th>金額</th><th></th></tr>
+            @open.map { d =>
+              <tr>
+                <th>@d.name</th>
+                <td>@d.vote</td>
+                <td>@d.money.getOrElse("-")</td>
+                <td>
+                  <form>
+                    <button type="submit" class="btn btn-info btn-xs" formaction="/vote/@d.id" formmethod="post">投票</button>
+                  </form>
+                </td>
+              </tr>
+            }
+          </table>
+
+          <form class="form-inline">
+            <div class="form-group">
+              <input type="text" class="form-control" id="dest" name="name" title="name">
+            </div>
+            <button type="submit" class="btn btn-default" formaction="/distination" formmethod="post">行き先追加</button>
+          </form>
+        </div>
+
+        <div class="col-sm-4">
+          <h2>行くことが決まった所</h2>
+          <table class="table table-condensed table-striped">
+            <tr><th>行き先</th><th>投票数</th><th>コメント</th></tr>
+            @scheduling.map { d =>
+              <tr>
+                <th>@d.name</th>
+                <td>@d.vote</td>
+                <td>@d.message</td>
+              </tr>
+            }
+          </table>
+        </div>
+
+        <div class="col-sm-4">
+          <h2>行った所</h2>
+          <table class="table table-condensed table-striped">
+            <tr><th>行き先</th><th>投票数</th><th>コメント</th></tr>
+            @close.map { d =>
+              <tr>
+                <th>@d.url.map { url => <a href="@url">@d.name</a> }.getOrElse(d.name)</th>
+                <td>@d.vote</td>
+                <td>@d.message</td>
+              </tr>
+            }
+          </table>
+        </div>
       </div>
 
-      <div class="col-sm-4">
-        <h3>行った所</h3>
-        <table class="table table-condensed table-striped">
-          <tr><th>行き先</th><th>投票数</th><th>コメント</th></tr>
-          @close.map { d =>
-            <tr>
-              <th>@d.url.map { url => <a href="@url">@d.name</a> }.getOrElse(d.name)</th>
-              <td>@d.vote</td>
-              <td>@d.message</td>
-            </tr>
-          }
-        </table>
-      </div>
-    </div>
-
-    <h3>解説</h3>
-    <p>このサイトはぽんこつ<a href="https://twitter.com/ponkotuy">@@ponkotuy</a>の片道切符をカンパするだけのサイトです。カンパされたら適当に予定を立ててぽんこつさんがその場所にIngressと観光しに行きます。それだけです</p>
-    <p>カンパは<a href="https://www.amazon.co.jp/gp/product/B004N3APGO/gcrnsts?ie=UTF8&redirect=true&ref_=s9_acsd_ri_bw_c_x_2">Amazonギフト券(E-mail)</a>で行います。宛先は<a href="mailto:web@@ponkotuy.com">web@@ponkotuy.com</a>でお願いします</p>
+      <h2>解説</h2>
+      <p>このサイトはぽんこつ<a href="https://twitter.com/ponkotuy">@@ponkotuy</a>の片道切符をカンパするだけのサイトです。カンパされたら適当に予定を立ててぽんこつさんがその場所にIngressと観光しに行きます。それだけです</p>
+      <p>カンパは金額が設定されているもののみ受け付けており、<a href="https://www.amazon.co.jp/gp/product/B004N3APGO/gcrnsts?ie=UTF8&redirect=true&ref_=s9_acsd_ri_bw_c_x_2">Amazonギフト券(E-mail)</a>で行います。宛先は<a href="mailto:web@@ponkotuy.com">web@@ponkotuy.com</a>でお願いします</p>
     <p>それだけではつまらないので、カンパしない人もひやかしで行って欲しいところに投票できます。ただし幾ら投票されてもカンパされない限りは行くとは限りません。気が向いたら行くかもしれないけど</p>
-    <p>投票は1日1回できます。脆弱性を付けばそれ以上できるかもしれないけど、だからと言って特に面白いことはありません</p>
-    <h3>他に作ってるサービス</h3>
+    <p>投票は1日1回できます。脆弱性を突けばそれ以上できるかもしれないけど、だからと言って特に面白いことはありません</p>
+    <h2>他に作ってるサービス</h2>
     <p>MyFleetGirls(<a href="https://myfleet.moe">https://myfleet.moe</a>)</p>
+  </div>
   </body>
 </html>
