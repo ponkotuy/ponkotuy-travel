@@ -18,22 +18,18 @@ class API extends Controller {
         val v = Vote.defaultAlias
         val ip = ipToLong(req.domain).getOrElse(req.domain.hashCode.toLong)
         val dayAgo = System.currentTimeMillis() - 1.day.toMillis
-        val ipCount = Vote.where(sqls.eq(v.ip, ip).and.gt(v.created, dayAgo)).count()
-        if(ipCount > 0) Redirect(routes.View.index("Already voted today."))
+        val sessionCount = Vote.where(sqls.eq(v.sessionId, session.id).and.gt(v.created, dayAgo)).count()
+        if(sessionCount > 0) Redirect(routes.View.index("Already voted today."))
         else {
-          val sessionCount = Vote.where(sqls.eq(v.sessionId, session.id).and.gt(v.created, dayAgo)).count()
-          if(sessionCount > 0) Redirect(routes.View.index("Already voted today."))
-          else {
-            Vote.create(DestId(destId), session.id, ip)
-            Redirect(routes.View.index())
-          }
+          Vote.create(DestId(destId), session.id, ip)
+          Redirect(routes.View.index())
         }
       }
     }
   }
 
   val form = Form("name" -> text.verifying(_.nonEmpty))
-  def createDistination() = Action { implicit req =>
+  def createDestination() = Action { implicit req =>
     DB localTx { implicit db =>
       WithSession { _ =>
         val name = form.bindFromRequest().get

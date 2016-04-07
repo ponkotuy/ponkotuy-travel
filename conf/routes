@@ -2,4 +2,4 @@
 GET / controllers.View.index(message: String ?= "")
 
 POST /vote/:id controllers.API.vote(id: Long)
-POST /distination controllers.API.createDistination()
+POST /destination controllers.API.createDestination()
