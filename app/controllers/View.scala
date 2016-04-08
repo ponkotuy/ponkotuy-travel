@@ -2,6 +2,7 @@ package controllers
 
 import models.{DestState, Destination}
 import play.api.mvc.{Action, Controller}
+import scalikejdbc.DB
 import utils.WithSession
 
 class View extends Controller {
