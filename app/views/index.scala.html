@@ -31,7 +31,7 @@
             <tr><th>行き先</th><th>投票数</th><th>金額</th><th></th></tr>
             @open.map { d =>
               <tr>
-                <th>@d.name</th>
+                <th class="@if(d.state == models.DestState.Far){del}else{}">@d.name</th>
                 <td>@d.vote</td>
                 <td>@d.money.getOrElse("-")</td>
                 <td>

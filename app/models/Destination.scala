@@ -19,9 +19,10 @@ case class Destination(
     Vote.where('destId -> id.value).count()
   }
 
-  def open: Boolean = state == DestState.Open
+  def open: Boolean = Vector(DestState.Open, DestState.Far).contains(state)
   def scheduling: Boolean = state == DestState.Scheduling
   def close: Boolean = state == DestState.Close
+  def far: Boolean = state == DestState.Far
 }
 
 case class DestId(value: Long) extends AnyVal {
@@ -41,8 +42,9 @@ object DestState {
   case object Open extends DestState(0)
   case object Scheduling extends DestState(1)
   case object Close extends DestState(2)
+  case object Far extends DestState(3)
 
-  val values = Vector(Open, Scheduling, Close)
+  val values = Vector(Open, Scheduling, Close, Far)
   def fromInt(i: Int): Option[DestState] = values.find(_.value == i)
 
   val typeBinder: TypeBinder[DestState] = new TypeBinder[DestState] {
