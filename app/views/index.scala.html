@@ -1,15 +1,7 @@
 @(message: String, open: Seq[models.Destination], scheduling: Seq[models.Destination], close: Seq[models.Destination])
-<!DOCTYPE html>
-<html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap-theme.min.css" />
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <title>ぽんこつ とらべる</title>
-  </head>
+@main {
+  <title>ぽんこつ とらべる</title>
+} {
   <body>
     <div class="container" role="main">
       <div class="jumbotron">
@@ -88,5 +80,4 @@
     <h2>他に作ってるサービス</h2>
     <p>MyFleetGirls(<a href="https://myfleet.moe">https://myfleet.moe</a>)</p>
   </div>
-  </body>
-</html>
+}
