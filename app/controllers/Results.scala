@@ -2,6 +2,6 @@ package controllers
 
 import play.api.mvc.Results._
 
-object Result {
+object Results {
   def success = Ok("Success")
 }

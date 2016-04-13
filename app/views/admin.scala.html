@@ -1,0 +1,42 @@
+@(message: String, dests: Seq[models.Destination])
+@main {
+  <title>ぽんこつ とらべる あどみん</title>
+} {
+  <div class="container" role="main">
+
+    @if(message.nonEmpty) {
+      <div class="alert alert-warning alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @message
+      </div>
+    }
+
+    @dests.map { dest =>
+      <h4>@dest.name</h4>
+      <form class="form-inline">
+        <div class="form-group">
+          <label for="money-@dest.id">Price</label>
+          <input type="number" class="form-control" id="money-@dest.id" name="money" title="money" value="@dest.money.getOrElse(0)">
+        </div>
+        <div class="form-group">
+          <label for="state-@dest.id">State</label>
+          <select class="form-control" id="state-@dest.id" name="state">
+            <option value="0" @if(dest.state == DestState.Open){selected}>Open</option>
+            <option value="1" @if(dest.state == DestState.Scheduling){selected}>Scheduling</option>
+            <option value="2" @if(dest.state == DestState.Close){selected}>Close</option>
+            <option value="3" @if(dest.state == DestState.Far){selected=}>Far</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="url-@dest.id">URL</label>
+          <input type="text" class="form-control" id="url-@dest.id" name="url" title="URL" value="@dest.url.getOrElse("")">
+        </div>
+        <div class="form-group">
+          <label for="message-@dest.id">Message</label>
+          <input type="text" class="form-control" id="message-@dest.id" name="message" title="Message" value="@dest.message.getOrElse("")">
+        </div>
+        <button type="submit" class="btn btn-info" formaction="/admin/destination/@dest.id" formmethod="post">Update</button>
+      </form>
+    }
+  </div>
+}

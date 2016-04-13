@@ -3,3 +3,6 @@ GET / controllers.View.index(message: String ?= "")
 
 POST /vote/:id controllers.API.vote(id: Long)
 POST /destination controllers.API.createDestination()
+
+GET /admin controllers.Admin.index(message: String ?= "")
+POST /admin/destination/:destId controllers.Admin.updateDestination(destId: Long)
